@@ -1,144 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
   IonItem,
-  IonLabel,
   IonList,
   IonCard,
   IonCardContent,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonPage,
   IonTitle,
   IonToolbar,
-  IonCol,
   IonIcon,
-  IonLoading,
-  IonAvatar,
-  useIonViewWillEnter
+  useIonViewWillEnter,
+  IonFab,
+  IonFabButton,
+  IonButtons,
+  IonButton,
+  IonFooter,
+  IonCardSubtitle
 } from '@ionic/react';
 import axios from 'axios';
-import * as Sensor from './../api/data.json';
+import { addCircle } from 'ionicons/icons';
+import { useFileStorage } from '../hooks/useFileStorage';
 
-interface ISensor {
-  id: string;
+export interface ISensor {
   username: string;
   location: string;
   message: string;
+  id: number;
 }
 
-interface Person {
-  name: string;
-  email: string;
-  position: string;
-  photo: string;
-}
-
-const API_URL = '../api/data.json';
+// const { displayDetails } = goToDetails();
 
 const Home: React.FC = props => {
   const [sensor, setSensor] = useState<ISensor[]>([]);
-  const [people, setPeople] = useState<Person[]>([]);
 
-  useIonViewWillEnter(async () => {
-    const result = await fetch('./api/data.json');
-    const data = await result.json();
-    setSensor(data);
-  });
+  const { saveToFile, getContents } = useFileStorage();
 
-  useIonViewWillEnter(async () => {
-    const result = await fetch('https://uifaces.co/api?limit=25', {
-      headers: { 'x-API-KEY': '873771d7760b846d51d025ac5804ab' }
-    });
-    const data = await result.json();
-    setPeople(data);
-  });
+  useEffect(() => {
+    axios.get('/locations').then(({ data }) => setSensor(data));
+  }, []);
+
+  // Initialize new file
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle class='ion-text-center'>MENT</IonTitle>
+          <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        {/* <IonLoading
-          isOpen={showLoading}
-          onDidDismiss={() => setShowLoading(false)}
-          message={'Loading...'}
-        /> */}
         <IonList>
           {sensor.map((sensor, idx) => (
-            <SensorItem key={idx} sensor={sensor}></SensorItem>
+            <SensorItem key={idx} sensor={sensor} />
           ))}
-          {people.map((person, idx) => (
-            <EmployeeItem key={idx} person={person} />
-          ))}
-
-          {/* <IonCard routerLink='/home/texttospeech'>
-            <IonCardHeader>
-              <IonCardTitle>Kitchen</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>Drink more water</IonCardContent>
-          </IonCard>
-
-          <IonCard routerLink='/home/texttospeech'>
-            <IonCardHeader>
-              <IonCardTitle>Bedroom</IonCardTitle>
-            </IonCardHeader>
-            <IonCardContent>Blow out your candles</IonCardContent>
-          </IonCard>
-        </IonList>
-
-        <IonList>
-          {data.map((res, idx) => (
-            <IonItem
-              key={idx}
-              onClick={() => {
-                showDetail(res);
-              }}>
-              <IonAvatar slot='start'>
-                <img src='assets/imgs/mint.jpg' alt='min' />
-              </IonAvatar>
-              <IonLabel>
-                <h2>{res.location}</h2>
-                <p>{res.message}</p>
-                <p>{res.username}</p>
-              </IonLabel>
-            </IonItem>
-          ))}   */}
         </IonList>
       </IonContent>
-    </IonPage>
-  );
-};
 
-const EmployeeItem: React.FC<{ person: Person }> = ({ person }) => {
-  return (
-    <IonItem>
-      <IonAvatar slot='start'>
-        <img src={person.photo} />
-      </IonAvatar>
-      <IonLabel>
-        <h2>{person.name}</h2>
-        <p>{person.position}</p>
-      </IonLabel>
-    </IonItem>
+      <IonFooter>
+        <IonToolbar>
+          <IonButtons slot='end'>
+            <IonButton routerLink='/addnewsensor'>
+              <IonIcon slot='icon-only' icon={addCircle} />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonFooter>
+    </IonPage>
   );
 };
 
 const SensorItem: React.FC<{ sensor: ISensor }> = ({ sensor }) => {
   return (
-    <IonItem>
+    <IonCard>
       <IonCardHeader>
-        <IonCardTitle>{sensor.location}</IonCardTitle>
+        <IonCardTitle>
+          {sensor.location} (ID: {sensor.id})
+        </IonCardTitle>
       </IonCardHeader>
-      <IonCardContent>
-        <p>{sensor.message}</p>
-      </IonCardContent>
-    </IonItem>
+      <IonCardContent>{sensor.message}</IonCardContent>
+    </IonCard>
   );
 };
 

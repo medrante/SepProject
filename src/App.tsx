@@ -5,7 +5,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { disc, flash, send } from 'ionicons/icons';
 import Home from './pages/Home';
 import Details from './pages/Details';
-import TextToSpeech from './pages/TextToSpeech';
+import AddNewSensor from './pages/AddNewSensor';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -31,8 +31,9 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path='/home' component={Home} exact={true} />
-        <Route path='/home/details/:res' component={Details} />
-        <Route path='/home/texttospeech' component={TextToSpeech} />
+        <Route path='/details/:res' component={Details} />
+        <Route path='/addnewsensor' component={AddNewSensor} />
+        {/* <Route path='/locations' component={Locations} /> */}
         <Route path='/' render={() => <Redirect to='/home' />} exact={true} />
       </IonRouterOutlet>
     </IonReactRouter>

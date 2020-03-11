@@ -1,24 +1,20 @@
 [
   {
-    "id": 1,
     "username": "Trinia Medrano",
     "location": "Kitchen",
-    "message": "Turn of the faucet"
+    "message": "Turn off the faucet"
   },
   {
-    "id": 2,
     "username": "Trinia Medrano",
     "location": "Living Room",
     "message": "Turn off TV"
   },
   {
-    "id": 3,
     "username": "Kyle Idk",
     "location": "Bedroom",
     "message": "Blow your candles"
   },
   {
-    "id": 4,
     "username": "Akshansh Gupta",
     "location": "Kitchen",
     "message": "Drink more water"

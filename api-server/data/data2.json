@@ -1,0 +1,38 @@
+[
+  {
+    "username": "Trinia Medrano",
+    "location": "Kitchen",
+    "message": "Turn off the faucet",
+    "id": 1
+  },
+  {
+    "username": "Trinia Medrano",
+    "location": "Living Room",
+    "message": "Turn off TV",
+    "id": 2
+  },
+  {
+    "username": "Kyle Idk",
+    "location": "Bedroom",
+    "message": "Blow your candles",
+    "id": 3
+  },
+  {
+    "username": "Akshansh Gupta",
+    "location": "Kitchen",
+    "message": "Drink more water",
+    "id": 4
+  },
+  {
+    "username": "trial",
+    "location": "error",
+    "message": "mewh",
+    "id": 5
+  },
+  {
+    "username": "trinia",
+    "location": "slkdjfls",
+    "message": "asldfjasldkgjsdg",
+    "id": 6
+  }
+]
