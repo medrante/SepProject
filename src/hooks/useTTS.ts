@@ -1,6 +1,6 @@
 import { useSpeak } from '@ionic/react-hooks/accessibility';
-import { TextToSpeech } from '@ionic-native/text-to-speech';
 
+// add text to mp3 function (node-gtts or nodtts)
 export function useTTS() {
   const { speak } = useSpeak();
 

@@ -5,9 +5,10 @@
   "dependencies": {
     "@capacitor/core": "1.4.0",
     "@capacitor/ios": "^1.5.0",
+    "@google-cloud/text-to-speech": "^2.3.0",
     "@ionic-enterprise/cordova": "^9.0.3",
     "@ionic-native/core": "^5.22.0",
-    "@ionic-native/text-to-speech": "^5.22.0",
+    "@ionic-native/text-to-speech": "^4.20.0",
     "@ionic/pwa-elements": "^1.4.1",
     "@ionic/react": "^4.11.8",
     "@ionic/react-hooks": "0.0.6",
@@ -28,7 +29,9 @@
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-media-capture": "^3.0.3",
     "cordova-plugin-tts": "^0.2.3",
+    "gtts.js": "^1.0.1",
     "ionicons": "^4.6.3",
+    "local-devices": "^3.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-mic": "^12.4.1",
@@ -41,7 +44,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sim": " ionic capacitor run ios -l --external"
   },
   "proxy": "http://localhost:9000",
   "eslintConfig": {

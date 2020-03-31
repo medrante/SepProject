@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {
   IonContent,
   IonHeader,
-  IonItem,
   IonList,
   IonCard,
   IonCardContent,
@@ -12,13 +11,9 @@ import {
   IonTitle,
   IonToolbar,
   IonIcon,
-  useIonViewWillEnter,
-  IonFab,
-  IonFabButton,
   IonButtons,
   IonButton,
-  IonFooter,
-  IonCardSubtitle
+  IonFooter
 } from '@ionic/react';
 import axios from 'axios';
 import { addCircle } from 'ionicons/icons';
@@ -31,18 +26,15 @@ export interface ISensor {
   id: number;
 }
 
-// const { displayDetails } = goToDetails();
+//TODO: create a "see Sensor Details page"
+//TODO: Edit page
 
 const Home: React.FC = props => {
   const [sensor, setSensor] = useState<ISensor[]>([]);
 
-  const { saveToFile, getContents } = useFileStorage();
-
   useEffect(() => {
     axios.get('/locations').then(({ data }) => setSensor(data));
   }, []);
-
-  // Initialize new file
 
   return (
     <IonPage>

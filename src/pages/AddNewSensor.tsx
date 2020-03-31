@@ -13,11 +13,12 @@ import {
   IonLabel,
   IonList
 } from '@ionic/react';
-import { Plugins } from '@capacitor/core';
 import axios from 'axios';
-import { useFileStorage } from '../hooks/useFileStorage';
 import { useTTS } from '../hooks/useTTS';
-//import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { useHistory } from 'react-router-dom';
+import find from 'local-devices';
+
+// TODO: connect with IP
 
 const AddNewSensor: React.FC = props => {
   const [newUsername, setUsername] = useState('');
@@ -26,10 +27,10 @@ const AddNewSensor: React.FC = props => {
 
   const [formErrors, setFormErrors] = useState({});
 
-  const { saveToFile } = useFileStorage();
   const { tts } = useTTS();
+  const history = useHistory();
 
-  /*   const onSubmit = () => {
+  const onSubmit = async () => {
     try {
       axios
         .post('/locations', {
@@ -40,6 +41,7 @@ const AddNewSensor: React.FC = props => {
         .then(res => {
           console.log(res.data);
         });
+
       tts(newMessage);
       alert('SUCCESS');
     } catch (e) {
@@ -48,20 +50,13 @@ const AddNewSensor: React.FC = props => {
     setUsername('');
     setLocation('');
     setMessage('');
-  }; */
-
-  const onSubmit = async () => {
-    const newSensor = {
-      username: newUsername,
-      location: newLocation,
-      message: newMessage
-    };
-    // await saveToFile(newSensor);
-    tts(newMessage);
-    alert('SUCCESS');
-    setUsername('');
-    setLocation('');
-    setMessage('');
+    history.push('/');
+  };
+  // TODO: Add IP Scanner
+  const ScanIP = () => {
+    find().then(devices => {
+      alert(devices);
+    });
   };
 
   return (
@@ -71,7 +66,9 @@ const AddNewSensor: React.FC = props => {
           <IonButtons slot='start'>
             <IonBackButton defaultHref='/home' />
           </IonButtons>
-          <IonTitle>Add New Sensor</IonTitle>
+          <IonTitle>
+            <p>Add New Sensor</p>
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
 
@@ -109,6 +106,9 @@ const AddNewSensor: React.FC = props => {
           </IonList>
           <IonButton type='submit' color='secondary'>
             Submit Me
+          </IonButton>
+          <IonButton color='secondary' onClick={ScanIP}>
+            Scan IP
           </IonButton>
         </form>
       </IonContent>
