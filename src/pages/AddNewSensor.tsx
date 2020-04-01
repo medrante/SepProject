@@ -17,6 +17,8 @@ import axios from 'axios';
 import { useTTS } from '../hooks/useTTS';
 import { useHistory } from 'react-router-dom';
 import find from 'local-devices';
+import { RecordingData, GenericResponse } from 'capacitor-voice-recorder';
+import { Plugins } from '@capacitor/core';
 
 // TODO: connect with IP
 
@@ -24,11 +26,13 @@ const AddNewSensor: React.FC = props => {
   const [newUsername, setUsername] = useState('');
   const [newLocation, setLocation] = useState('');
   const [newMessage, setMessage] = useState('');
+  const [newIp, setIp] = useState('');
 
   const [formErrors, setFormErrors] = useState({});
 
   const { tts } = useTTS();
   const history = useHistory();
+  const { VoiceRecorder } = Plugins;
 
   const onSubmit = async () => {
     try {
@@ -36,7 +40,8 @@ const AddNewSensor: React.FC = props => {
         .post('/locations', {
           username: newUsername,
           location: newLocation,
-          message: newMessage
+          message: newMessage,
+          IP: newIp
         })
         .then(res => {
           console.log(res.data);
@@ -57,6 +62,17 @@ const AddNewSensor: React.FC = props => {
     find().then(devices => {
       alert(devices);
     });
+  };
+
+  // TODO: Record Audio
+  const RecordAudio = () => {
+    VoiceRecorder.startRecording().then((result: GenericResponse) =>
+      console.log(result.value)
+    );
+
+    VoiceRecorder.stopRecording().then((result: RecordingData) =>
+      console.log(result.value)
+    );
   };
 
   return (
@@ -104,10 +120,13 @@ const AddNewSensor: React.FC = props => {
               />
             </IonItem>
           </IonList>
-          <IonButton type='submit' color='secondary'>
+          <IonButton color='ment' onClick={RecordAudio}>
+            Record Audio
+          </IonButton>
+          <IonButton type='submit' color='ment'>
             Submit Me
           </IonButton>
-          <IonButton color='secondary' onClick={ScanIP}>
+          <IonButton color='ment' onClick={ScanIP}>
             Scan IP
           </IonButton>
         </form>

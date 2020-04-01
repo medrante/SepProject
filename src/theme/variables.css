@@ -74,6 +74,14 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  /** ment **/
+  --ion-color-ment: #52a7c1;
+  --ion-color-ment-rgb: 83, 167, 193;
+  --ion-color-ment-contrast: #ffffff;
+  --ion-color-ment-contrast-rgb: 255, 255, 255;
+  --ion-color-ment-shade: #84bbcc;
+  --ion-color-ment-tint: #90d7ec;
 }
 
 ion-card {
@@ -81,8 +89,16 @@ ion-card {
   margin: 15px;
 }
 
-ion-title {
+.ion-color-ment {
+  --ion-color-base: var(--ion-color-ment);
+  --ion-color-base-rgb: var(--ion-color-ment-rgb);
+  --ion-color-contrast: var(--ion-color-ment-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-ment-contrast-rgb);
+  --ion-color-shade: var(--ion-color-ment-shade);
+  --ion-color-tint: var(--ion-color-ment-tint);
+}
+/* ion-title {
   line-height: 40px;
   background: url('./ment.png') no-repeat center;
   background-size: 100px;
-}
+} */

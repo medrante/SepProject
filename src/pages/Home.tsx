@@ -13,20 +13,24 @@ import {
   IonIcon,
   IonButtons,
   IonButton,
-  IonFooter
+  IonFooter,
+  IonFab,
+  IonFabButton
 } from '@ionic/react';
+import { Link, match } from 'react-router-dom';
 import axios from 'axios';
 import { addCircle } from 'ionicons/icons';
 import { useFileStorage } from '../hooks/useFileStorage';
+import ment from '../theme/ment.png';
 
 export interface ISensor {
   username: string;
   location: string;
   message: string;
   id: number;
+  IP: string;
 }
 
-//TODO: create a "see Sensor Details page"
 //TODO: Edit page
 
 const Home: React.FC = props => {
@@ -40,13 +44,30 @@ const Home: React.FC = props => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Home</IonTitle>
+          <IonTitle>
+            <div>Home</div>
+          </IonTitle>
         </IonToolbar>
+        <IonFab horizontal='end' vertical='center' slot='fixed' edge>
+          <IonFabButton color='light'>
+            <img src={ment} />
+          </IonFabButton>
+        </IonFab>
       </IonHeader>
-      <IonContent>
+
+      <IonContent fullscreen className='ion-padding'>
         <IonList>
           {sensor.map((sensor, idx) => (
-            <SensorItem key={idx} sensor={sensor} />
+            <Link to={`/home/details/${sensor.id}`}>
+              <IonCard>
+                <IonCardHeader>
+                  <IonCardTitle>
+                    {sensor.location} (ID: {sensor.id})
+                  </IonCardTitle>
+                </IonCardHeader>
+                <IonCardContent>{sensor.message}</IonCardContent>
+              </IonCard>
+            </Link>
           ))}
         </IonList>
       </IonContent>
@@ -61,19 +82,6 @@ const Home: React.FC = props => {
         </IonToolbar>
       </IonFooter>
     </IonPage>
-  );
-};
-
-const SensorItem: React.FC<{ sensor: ISensor }> = ({ sensor }) => {
-  return (
-    <IonCard>
-      <IonCardHeader>
-        <IonCardTitle>
-          {sensor.location} (ID: {sensor.id})
-        </IonCardTitle>
-      </IonCardHeader>
-      <IonCardContent>{sensor.message}</IonCardContent>
-    </IonCard>
   );
 };
 
