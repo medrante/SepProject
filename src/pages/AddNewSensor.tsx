@@ -11,14 +11,16 @@ import {
   IonItem,
   IonInput,
   IonLabel,
-  IonList
+  IonList,
+  IonFab,
+  IonFabButton,
+  IonIcon
 } from '@ionic/react';
 import axios from 'axios';
 import { useTTS } from '../hooks/useTTS';
 import { useHistory } from 'react-router-dom';
 import find from 'local-devices';
-import { RecordingData, GenericResponse } from 'capacitor-voice-recorder';
-import { Plugins } from '@capacitor/core';
+import { mic, square } from 'ionicons/icons';
 
 // TODO: connect with IP
 
@@ -27,12 +29,12 @@ const AddNewSensor: React.FC = props => {
   const [newLocation, setLocation] = useState('');
   const [newMessage, setMessage] = useState('');
   const [newIp, setIp] = useState('');
-
   const [formErrors, setFormErrors] = useState({});
+  const [newIcon, setIcon] = useState('{ mic }');
 
-  const { tts } = useTTS();
+  const { tts, startRecording, stopRecording } = useTTS();
   const history = useHistory();
-  const { VoiceRecorder } = Plugins;
+  let isRecording: boolean = false;
 
   const onSubmit = async () => {
     try {
@@ -57,6 +59,7 @@ const AddNewSensor: React.FC = props => {
     setMessage('');
     history.push('/');
   };
+
   // TODO: Add IP Scanner
   const ScanIP = () => {
     find().then(devices => {
@@ -64,15 +67,25 @@ const AddNewSensor: React.FC = props => {
     });
   };
 
-  // TODO: Record Audio
-  const RecordAudio = () => {
-    VoiceRecorder.startRecording().then((result: GenericResponse) =>
-      console.log(result.value)
-    );
+  // change mic icon to square to indcate that it is recording
+  const showToggle = () => {
+    if (newIcon == '{ mic }') {
+      isRecording = true;
+      setIcon('{ mic }');
+    } else {
+      isRecording = false;
+      setIcon('{ mic }');
+    }
+  };
 
-    VoiceRecorder.stopRecording().then((result: RecordingData) =>
-      console.log(result.value)
-    );
+  // TODO: Record Audio
+  const RecordAudio = async () => {
+    const res = await startRecording();
+  };
+
+  // Stop Recording
+  const StopRecording = async () => {
+    const res = await stopRecording();
   };
 
   return (
@@ -120,9 +133,7 @@ const AddNewSensor: React.FC = props => {
               />
             </IonItem>
           </IonList>
-          <IonButton color='ment' onClick={RecordAudio}>
-            Record Audio
-          </IonButton>
+          <IonButton color='ment'>Record Audio</IonButton>
           <IonButton type='submit' color='ment'>
             Submit Me
           </IonButton>
@@ -130,6 +141,18 @@ const AddNewSensor: React.FC = props => {
             Scan IP
           </IonButton>
         </form>
+
+        <IonFab horizontal='center' vertical='bottom' className='ion-padding'>
+          <IonFabButton color='ment'>
+            <IonIcon
+              icon={mic}
+              onClick={() => {
+                startRecording();
+                showToggle();
+              }}
+            />
+          </IonFabButton>
+        </IonFab>
       </IonContent>
     </IonPage>
   );

@@ -17,10 +17,11 @@ import {
   IonFab,
   IonFabButton
 } from '@ionic/react';
-import { Link, match } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { addCircle } from 'ionicons/icons';
 import { useFileStorage } from '../hooks/useFileStorage';
+import { useTTS } from '../hooks/useTTS';
 import ment from '../theme/ment.png';
 
 export interface ISensor {
@@ -35,6 +36,7 @@ export interface ISensor {
 
 const Home: React.FC = props => {
   const [sensor, setSensor] = useState<ISensor[]>([]);
+  const { audioFiles, startRecording, stopRecording } = useTTS();
 
   useEffect(() => {
     axios.get('/locations').then(({ data }) => setSensor(data));

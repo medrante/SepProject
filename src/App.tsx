@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { disc, flash, send } from 'ionicons/icons';
 import Home from './pages/Home';
 import Details from './pages/Details';
 import AddNewSensor from './pages/AddNewSensor';

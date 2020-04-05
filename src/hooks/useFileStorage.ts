@@ -2,12 +2,15 @@ import { useState, useEffect } from 'react';
 import { useFilesystem, base64FromPath } from '@ionic/react-hooks/filesystem';
 import { useStorage } from '@ionic/react-hooks/storage';
 import { isPlatform } from '@ionic/react';
+
 import {
   Plugins,
   FilesystemDirectory,
+  Capacitor,
   FilesystemEncoding
 } from '@capacitor/core';
 
+export interface Recording {}
 export function useFileStorage() {
   const { Filesystem } = Plugins;
 
